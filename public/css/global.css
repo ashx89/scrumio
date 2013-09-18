@@ -51,6 +51,8 @@ ul,li {
 	left:0;
 	cursor:pointer
 }
+
+
 .content {
 	position:relative;
 	top:40px;
@@ -86,7 +88,7 @@ ul,li {
 	height: 500px;
 	position: relative;
 	margin-left: 20%;
-	top: 180px;
+	top: 90px;
 }
 
 header {
@@ -120,8 +122,11 @@ header {
 	float:left;
 }
 .logo.login-page {
+	width: 150px;
+	display: block;
 	top: 20px;
-	left: 20px;
+	left: 50%;
+	margin-left: -75px;
 }
 .new_user {
 	color: #89D581;
@@ -140,7 +145,6 @@ header {
 	width: 100%;
 	height: 180px;
 	display: none;
-	cursor: pointer;
 }
 h3 {
 	float: left;
@@ -152,13 +156,32 @@ h3 {
 .block {
 	width: 30%;
 	float: left;
-	margin-right: 40px;
+	display: inline-block;
+	left: 20px;
+	position: relative;
 }
-form {
-	width: 90%;
+.block:nth-child(2) { left: 40px; }
+.block:nth-child(3) { left: 60px; }
+form.login-form {
+	width: 300px;
 	position: relative;
 	top: 30px;
-	left: 40px;
+	left: 50%;
+	margin-left: -150px;
+}
+.login-form input{
+	display: block;
+	width: 300px;
+}
+.add-user-form {
+	width: 80%;
+	position: relative;
+	top: 10px;
+	left: 0;
+}
+.add-user-form input {
+	display: block;
+	width: 100%;
 }
 input {
 	padding: 7px;
@@ -169,7 +192,6 @@ input {
 }
 input,
 button {
-	display: inline-block;
 	float: left;
 	margin-left: 10px;
 }
@@ -470,7 +492,7 @@ textarea {
 	}
 	.editable-buttons {
 		position: relative;
-		left: -19px;
+		left: -30px;
 		top: 0;
 		height: 70px;
 	}
@@ -479,6 +501,9 @@ textarea {
 		margin-bottom: 10px;
 	}
 	.editable-cancel {
+		position: relative;
 		margin: 0 !important;
+		top: 30px;
+		left: -40px;
 	}
 }

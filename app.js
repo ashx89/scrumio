@@ -93,7 +93,7 @@ app.post('/',
     }
 );
 
-app.get('/api/users/:account', api.users);
+//app.get('/api/users/:account', api.users);
 
 
 //======================== Server
@@ -105,6 +105,8 @@ var server = http.createServer(app).listen(app.get('port'), function(){
 var io = require('socket.io').listen(server);
 var passportSocket = require('passport.socketio');
 
+
+//================================= Authourize user
 io.set('authorization', passportSocket.authorize({
   key: 'connect.sid',
   secret: 'amsterdam',
@@ -120,6 +122,7 @@ io.sockets.on('connection', function(socket) {
   socket.account = socket.handshake.user.account;
   socket.join(socket.account);
 
+//================================= Adding a New Note
   socket.on('add', function() {
     Note.create({
       content: 'New Note',
@@ -133,11 +136,13 @@ io.sockets.on('connection', function(socket) {
 
   });
 
+  //================================= Deleting a note
   socket.on('delete', function(data) {
     socket.broadcast.to(socket.account).emit('deleted', {id: data.id});
     Note.find({_id: data.id, account: socket.account}).remove();
   });
 
+  //================================= Moving a note
   socket.on('move', function(data) {
     Note.findByIdAndUpdate(data.id, {'status' : data.droppedId}, function(err) {
         if(err) throw err;
@@ -145,7 +150,7 @@ io.sockets.on('connection', function(socket) {
     socket.broadcast.to(socket.account).emit('moved', data);
   });
 
-  //================================= Adding a New Note
+  //================================= Update note content
   socket.on('contentUpdate', function(data) {
       Note.findOne({_id: ObjectId.fromString(data.pk), account: socket.account}, function(err, note) {
         note.content = data.value;
@@ -154,6 +159,7 @@ io.sockets.on('connection', function(socket) {
       });    
   });
   
+  //================================= A New User
   socket.on('newuser', function(data) {
     User.find({username: data.u}, function(err, found) {
       if(err) throw err;

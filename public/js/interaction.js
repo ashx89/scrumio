@@ -31,6 +31,7 @@ $(function() {
 				e.preventDefault();
 				var username = $('#add_username').val(),
 					password = $('#add_password').val();
+					if(username === "" || password === "") {return false;}
 				socket.emit('newuser', {u: username, p: password});
 			});
 		},
@@ -98,6 +99,7 @@ $(function() {
 		}
 	});
 
+	//====================== Place the note
 	function placeNewNote(data) {
 		var html = '<li class="note todo ui-state-default" id="'+data._id+'">\
 					<p class="note-content" data-type="textarea" data-pk="'+data._id+'" data-name="content">\
@@ -111,26 +113,28 @@ $(function() {
 		UI.delete();
 	}
 
-	//====================== New Note
-
+	//====================== Add a New Note
 	UI.add.on('click', function(e) {
 		e.preventDefault();
 		socket.emit('add');	
 	});
 
+	//====================== New Note
 	socket.on('newnote', function(data) {
 		placeNewNote(data);	
 	});
 
+	//====================== Deleted Note
 	socket.on('deleted', function(data) {
 		$('li#'+data.id).remove();
 	});
 
-
+	//====================== Update note content
 	socket.on('updateChanges', function(data) {
 		$('.note').find('p[data-pk='+data._id+']').text(data.content);
 	});
 
+	//====================== Redraw note in new moved location
 	socket.on('moved', function(data) {
 		var existing = $('.note').find('p[data-pk='+data.id+']');
 		if($(existing[0]).data('pk') === data.id) {
@@ -144,10 +148,12 @@ $(function() {
 				</a>\
 				</li>\
 			');
-			UI.init();
+			UI.editable();
+			UI.delete();
 		}
 	});
 
+	//====================== Notification
 	socket.on('notification', function(data) {
 		if(data) {
 			UI.notification.text('User already exists! -> '+data.username).addClass('red').fadeIn(300).delay(1500).fadeOut(1000);

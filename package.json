@@ -1,12 +1,21 @@
 {
   "name": "application-name",
-  "version": "0.0.1",
+  "version": "0.0.1-6",
   "private": true,
   "scripts": {
     "start": "node app"
   },
   "dependencies": {
     "express": "3.0.4",
-    "ejs": "*"
+    "ejs": "*",
+    "mongoose": "*",
+    "socket.io": "*",
+    "passport": "0.1.17",
+    "passport-local": "*",
+    "passport.socketio": "*"
+  },
+  "subdomain": "ashleyjtaylor.scrumio",
+  "engines": {
+    "node": "0.8.x"
   }
 }
