@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Scrum.io</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="/css/global.css">
+</head>
+<body>
+
+	<div id="notification" class="notification">
+		<h4></h4>
+	</div>
+
+	<header>
+		<div class="inner-wrap clearfix">
+			<h1 class="logo">Scrum.io</h1>
+			<a href="#" id="new_user" class="new_user">+</a>
+		</div>
+	</header>
+	<div class="menu">
+		<div class="block clearfix">
+			<h3>Add a User</h3>
+			<form>
+				<input type="text" id="add_username" placeholder="username">
+				<input type="password" id="add_password" placeholder="password">
+				<button id="add_user" class="button">Add User</button>
+			</form>
+		</div>
+		<div class="block clearfix">
+			<h3>Remove User</h3>
+			<form>
+				<select>
+					<option></option>
+				</select>
+			</form>
+		</div>
+	</div>
+
+	<div class="content">
+		<div class="inner-wrap clearfix">
+
+			<div class="column">
+				<div class="column-header clearfix">
+					<span class="total-notes light-blue">4</span>
+					<a href="#" id="add-todo" class="add-todo">&plus;</a>
+					<h2 class="column-title">To Do</h2>
+				</div>
+
+				<ul class="column-notes clearfix connectedSortable" id="todo">
+					<% for(var i=0; i < notes.length; i++) { %>
+						<% if(notes[i].status === 'todo') { %>
+						<li class="note todo ui-state-default" id="<%= notes[i]._id %>">
+							<p class="note-content" data-type="textarea" data-pk="<%= notes[i]._id %>"><%= notes[i].content %></p>
+							<a class="delete_anchor" id="<%= notes[i]._id %>">
+								<span class="delete">&times;</span>
+							</a>				
+						</li>
+					<% } } %>	
+				</ul>
+
+			</div><!--TO DO col-->
+
+			<div class="column">
+				<div class="column-header clearfix connectedSortable">
+					<span class="total-notes orange">2</span>
+					<h2 class="column-title">In-progress</h2>
+				</div>			
+				<ul class="column-notes clearfix connectedSortable" id="in-progress">
+					<% for(var i=0; i < notes.length; i++) { %>
+						<% if(notes[i].status === 'in-progress') { %>
+							<li class="note in-progress ui-state-default" id="<%= notes[i]._id %>">
+								<p class="note-content" data-type="textarea" data-pk="<%= notes[i]._id %>"><%= notes[i].content %></p>
+								<a class="delete_anchor" id="<%= notes[i]._id %>">
+									<span class="delete">&times;</span>
+								</a>				
+							</li>
+					<% } } %>	
+				</ul>
+			</div><!--In Progress col-->
+
+			<div class="column">
+				<div class="column-header clearfix">
+					<span class="total-notes red">3</span>
+					<h2 class="column-title">Done</h2>
+				</div>	
+				<ul class="column-notes clearfix connectedSortable" id="done">
+					<% for(var i=0; i < notes.length; i++) { %>
+						<% if(notes[i].status === 'done') { %>
+						<li class="note done ui-state-default" id="<%= notes[i]._id %>">
+							<p class="note-content" data-type="textarea" data-pk="<%= notes[i]._id %>"><%= notes[i].content %></p>
+							<a class="delete_anchor" id="<%= notes[i]._id %>">
+								<span class="delete">&times;</span>
+							</a>				
+						</li>
+					<% } } %>	
+				</ul>		
+			</div><!--Done col-->
+		</div><!--End Inner wrap-->
+	</div><!--End content-->
+
+
+	<!--<script src="/js/jquery-1.9.1.js"></script>-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="/js/jquery-ui-1.10.1.custom.min.js"></script>
+	<script src="/js/jqueryui-editable-ck.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="/js/interaction.js"></script>
+
+	<script>
+		var socket = io.connect('http://localhost:3000');
+	</script>
+
+</body>
+</html>
